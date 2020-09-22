@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style type="text/css">
+        #row-top-1 {
+            opacity: 0;
+            transition: all .6s;
+        }
+
+        #row-bottom-1 {
+            opacity: 0;
+            transition: all .6s;
+            pointer-events: none;
+        }
+
+        .delete-activate #row-top-1 {
+            opacity: 1;
+        }
+
+        .delete-activate #row-bottom-1 {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #row-top-2 {
+            opacity: 0;
+            transition: all .6s;
+        }
+
+        #row-bottom-2 {
+            opacity: 0;
+            transition: all .6s;
+            pointer-events: none;
+        }
+
+        .update-activate #row-top-2 {
+            opacity: 1;
+        }
+
+        .update-activate #row-bottom-2 {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+    </style>
+    <title>Customer Relationship Management Application</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top py-0">
+        <div class="container">
+            <a class="navbar-brand mr-5 pt-2">
+                <h4 class="text-white">
+                    Customer Relationship Management
+                </h4>
+            </a>
+            <div class="collapse navbar-collapse" id="main-nav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item dropdown">
+                        <a  class="nav-link"><i class="fa fa-user text-white"></i> Welcome Hardik</a>
+                    </li>
+                    <li>
+                    <form action="/logout" method="post" id="logoutForm">
+                     <a id="logoutButton" class="nav-link"><i class="fas fa-sign-out-alt text-white"></i> Logout</a>
+                     </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <section class="py-3 bg-primary mt-5">
+        <div class="container">
+            <div class="text-left text-white">
+                <h1>
+                    <i class="fa fa-cog"></i> Dashboard
+                </h1>
+            </div>
+        </div>
+    </section>
+
+
+
+    <section class="py-3 bg-light">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-primary form-control" data-toggle="modal" data-target="#modal1"><i class="fa fa-plus"></i> Add Customer</button>
+                </div>
+                <div class="col-md-3">
+                    <button class="text-white btn btn-warning form-control" id="updateCustomer"><i class="text-white fa fa-refresh"></i> Update Customer</button>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-danger form-control" id="deleteCustomer"><i class="fa fa-trash"></i> Delete Customers</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-9">
+                    <caption class=" text-left text-dark">
+                        <h3>Customers List</h3>
+                    </caption>
+
+                    <table class="table table-striped" id="table">
+                        <thead class="table-head bg-dark text-white">
+                            <tr>
+                                <td>#</td>
+                                <td>First Name</td>
+                                <td>Last Name</td>
+                                <td>Email</td>
+                                <td>
+                                    <div id="row-top-1"></div>
+                                </td>
+                                <td>
+                                    <div id="row-top-2"></div>
+                                </td>
+                            </tr>
+                        </thead>
+
+                        <tbody class="table-body">
+                            <div th:each="customer: ${customers}">
+                                <tr id="table-body">
+                                    <td th:text="${customer.id}">ID</td>
+                                    <td th:text="${customer.firstName}">FIRST NAME</td>
+                                    <td th:text="${customer.lastName}">LAST NAME</td>
+                                    <td th:text="${customer.email}">EMAIL</td>
+                                    <td>
+                                        <button class="btn btn-outline-danger btn-sm" data-toggle="modal" data-target="#modal3" th:attrappend="data-id=*{customer.id},data-firstName=*{customer.firstName},data-lastName=*{customer.lastName},data-email=*{customer.email}" id="row-bottom-1"><i class="fa fa-trash"></i> DELETE</button>
+                                    </td>
+                                    <td><button class="btn btn-outline-warning btn-sm" data-toggle="modal" data-target="#modal2" th:attrappend="data-id=*{customer.id},data-firstName=*{customer.firstName},data-lastName=*{customer.lastName},data-email=*{customer.email}" id="row-bottom-2"><i class="fas fa-pencil-alt"></i> UPDATE</button></td>
+                                </tr>
+                             </div>
+                        </tbody>
+                    </table>
+
+                </div>
+                <div class="col-lg-3 col-6 py-3 m-auto">
+                    <div class="card bg-primary my-4">
+                        <div class="card-body text-center text-white">
+                            <h3>CUSTOMERS</h3>
+                            <h1 class="text-white py-2" th:text="${numberOfUsers}"><i class="fa fa-users"></i>5</h1>
+                            <button class="btn btn-sm btn-outline-light"><i class="fas fa-eye"></i> View</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <footer class="bg-dark py-3 fixed-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <h5 class="text-white text-center">
+                        Copyright <i class="fa fa-copyright"></i> <span id="year"></span> HARDIK SINGH BEHL
+                    </h5>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <form action="/" th:object="${customer}" id="form" method="post">
+        <div class="modal fade" id="modal1">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary">
+                        <div class="modal-title  text-white">
+                            <h1>Add New Customer</h1>
+                        </div>
+                        <button class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <input th:field="*{firstName}" class="form-control my-4" placeholder="Enter First Name" />
+                        <input th:field="*{lastName}" class="form-control my-4" placeholder="Enter Last Name" />
+                        <input th:field="*{email}" class="form-control my-4" placeholder="Enter Email" />
+                    </div>
+                    <div class="modal-footer">
+                        <button onclick="form_submit()" class="btn btn-primary" data-dismiss="modal" type="submit">ADD</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+
+
+    <div class="modal fade" id="modal2">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-warning">
+                    <div class="modal-title  text-white">
+                        <h1 class="text-white">Update Customer</h1>
+                    </div>
+                    <button class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control my-4 id" readonly>
+                    <input type="text" class="form-control my-4 f-name" required>
+                    <input type="text" class="form-control my-4 l-name" required>
+                    <input type="text" class="form-control my-4 email" required>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" id="update-form">
+                        <button class="btn btn-warning" type="submit" id="update-btn">UPDATE</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="modal fade m-auto" id="modal3">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header bg-danger">
+                    <div class="modal-title  text-white">
+                        <h1 class="text-white"><i class="fa fa-exclamation-triangle "></i> Delete Customer</h1>
+                    </div>
+                    <button class="close" data-dismiss="modal">
+                        <span class="text-white">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" class="form-control my-3 id" readonly>
+                    <input type="text" class="form-control my-3 f-name" readonly>
+                    <input type="text" class="form-control my-3 l-name" readonly>
+                    <input type="text" class="form-control my-3 email" readonly>
+                    <h6 class="text-center mt-4 mb-1"><i class="fa fa-exclamation-triangle text-danger"></i> ACTION CANNOT BE UNDONE <i class="text-danger fa fa-exclamation-triangle"></i></h6>
+                </div>
+                <div class="modal-footer">
+                    <form method="post" id="delete-form">
+                        <button class="btn btn-danger" type="submit" id="delete-btn">DELETE</button>
+                    </form>
+                    <button class="btn btn-secondary" data-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="http://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script>
+        //get curreny year rather than hardcoding
+        $('#year').text(new Date().getFullYear())
+
+        $('#modal2').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id')
+            var firstName = button.data('firstname')
+            var lastName = button.data('lastname')
+            var email = button.data('email')
+
+            var modal = $(this)
+            modal.find('.id').val(id)
+            modal.find('.f-name').val(firstName)
+            modal.find('.l-name').val(lastName)
+            modal.find('.email').val(email)
+
+            document.getElementById('update-btn').addEventListener('click', () => {
+                document.getElementById('update-form').action = "update?id=" + modal.find('.id').val() + "&firstname=" + modal.find('.f-name').val() + "&lastname=" + modal.find('.l-name').val() + "&email=" + modal.find('.email').val();
+            });
+
+        })
+
+
+        $('#modal3').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget) // Button that triggered the modal
+            var id = button.data('id')
+            var firstName = button.data('firstname')
+            var lastName = button.data('lastname')
+            var email = button.data('email')
+
+            var modal = $(this)
+            modal.find('.id').val(id)
+            modal.find('.f-name').val(firstName)
+            modal.find('.l-name').val(lastName)
+            modal.find('.email').val(email)
+
+            document.getElementById('delete-btn').addEventListener('click', () => {
+                document.getElementById('delete-form').action = "delete?id=" + id;
+            });
+
+        })
+
+    </script>
+    <script type="text/javascript">
+        function form_submit() {
+            document.getElementById("form").submit();
+        }
+
+        const delButton = document.getElementById("deleteCustomer");
+        delButton.addEventListener("click", () => {
+            document.getElementById("table").classList.toggle("delete-activate");
+        });
+
+        const updateButton = document.getElementById("updateCustomer");
+        updateButton.addEventListener("click", () => {
+            document.getElementById("table").classList.toggle("update-activate");
+        });
+        
+        
+        document.getElementById("logoutButton").addEventListener("click",()=>{
+            document.getElementById("logoutForm").submit();
+        }); 
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Customer Relationship Management Application</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="css/mdb.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+
+  <!-- Start your project here-->  
+  
+          <div class="view intro-2">
+          <div class="mask rgba-stylish-strong h-100 d-flex justify-content-center align-items-center">
+        <div class="container">
+          <div class="row">
+            <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
+           <div class="card wow fadeIn my-5" data-wow-delay="0.3s">
+                <div class="card-body">
+
+                  <!--Header-->
+                  <div class="form-header grey darken-3">
+                    <h3><i class="fas fa-inbox mt-2 mb-2"></i>&nbsp;<small>Manage Customers</small></h3>
+                  </div>
+
+                  <form action="/login" method="post">
+                  <div class="md-form">
+                    <i class="fas fa-user prefix white-text"></i>
+                    <input type="text" id="orangeForm-f-name"  class="form-control" name="username" autocomplete="off" required>
+                    <label for="orangeForm-f-name">Enter Your Name</label>
+                  </div>
+                  <div class="md-form">
+                    <i class="fas fa-key prefix white-text"></i>
+                    <input type="password" id="orangeForm-email"  class="form-control" name="password" autocomplete="off" required>
+                    <label for="orangeForm-email">Enter Your Password</label>
+                    </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn grey darken-3 btn-lg text-white my-3" id="btn-submit">LOG IN</button>
+                    </form>
+                    <hr>
+                    <div class="inline-ul text-center d-flex justify-content-center">
+                      <a class="p-2 m-2 fa-lg tw-ic" href="https://www.github.com/hardikSinghBehl/CRM_Spring" target="_blank"><i class="fab fa-github white-text"></i></a>
+                    </div>
+                    </div>
+               </div>
+                </div>
+                <div class="text-light mt-0 text-center">Hardik's <strong><a href="" data-toggle="modal" data-target="#modalLoginAvatar">Terms and Condition</a></strong> Apply</div>
+
+              </div>
+                 
+                  </div>
+               </div>
+                </div>
+              </div>
+  <!-- End your project here-->
+
+
+
+<div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" alt="avatar" class="rounded-circle img-responsive">
+      </div>
+      <div class="modal-body text-center mb-1">
+
+        <h5 class="mt-1 mb-2 h5">Hardik Behl's Assistant</h5>
+
+        <div class="text-muted">HARDIK SAYS THERE ARE NO TERMS AND CONDITIONS </div>
+
+        <div class="text-center mt-4">
+          <button class="btn btn-cyan mt-1" data-dismiss="modal">CLOSE</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+ 
+ 
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="js/mdb.min.js"></script>
+  <!-- Your custom scripts (optional) -->
+  <div th:if="${param.success != null}">
+	<script>
+	$('#modalSuccess').modal('show');
+	</script>
+</div>
+  <script type="text/javascript">
+  $('#btn-submit').click(function() {
+	  var val1 = document.getElementById('orangeForm-f-name').value;
+	  var val2 = document.getElementById('orangeForm-l-name').value;
+	  var val3 = document.getElementById('orangeForm-email').value;
+
+	  if (val1=="" || val2=="" || val3==""){
+		  return;
+	  }
+	  
+	  $('#btn-submit').html('<span class="spinner-border spinner-border-sm mr-2" role="status" aria-hidden="true"></span>Sending...').addClass('disabled');
+	});</script>
+
+</body>
+</html>
